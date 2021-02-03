@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    
+    parameters { 
+        choice(name: 'Script_Choice', choices: ['3', '2', '1'], description: '1 - Frontend \n 2 - Backend \n 3 - Default - Combined') }
     stages {
         stage('Pull Code') {
             steps {
@@ -25,30 +28,18 @@ pipeline {
                 }
             }
         }
-        stage('run backend testing') {
+        stage('Choice') {
             steps {
                 script {
-                    sh 'python3.8 backend_testing.py'
-
+                    if (params.Script_Choice == '1'){
+                        sh 'python frontend_testing.py'
+                    }else if (params.Script_Choice == '2'){
+                        sh 'python backend_testing.py'
+                    }else{
+                        sh 'python combined_testing.py'
+                   }
                 }
             }
-        }
-        stage('run frontend testing') {
-            steps {
-                script {
-                    sh 'python3.8 frontend_testing.py'
-
-                }
-            }
-        }
-        stage('run combined testing') {
-            steps {
-                script {
-                    sh 'python3.8 combined_testing.py'
-
-                }
-            }
-        }
         stage('run clean environmant ') {
             steps {
                 script {
