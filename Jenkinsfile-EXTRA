@@ -32,11 +32,11 @@ pipeline {
             steps {
                 script {
                     if (params.Script_Choice == '1'){
-                        sh 'python frontend_testing.py'
+                        sh 'python3.8 frontend_testing.py'
                     }else if (params.Script_Choice == '2'){
-                        sh 'python backend_testing.py'
+                        sh 'python3.8 backend_testing.py'
                     }else{
-                        sh 'python combined_testing.py'
+                        sh 'python3.8 combined_testing.py'
                    }
                 }
             }
